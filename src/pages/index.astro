@@ -1,16 +1,25 @@
 ---
-import "../global.css";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <h1 class="text-3xl">Astro</h1>
-  </body>
-</html>
+<BaseLayout>
+  <section class="w-full py-16">
+    <div class="container">
+      <div class="space-y-6">
+        <h1
+          class="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none"
+        >
+          Welcome to My Site
+        </h1>
+        <p class="max-w-[500px] text-lg text-muted-foreground">
+          僕のエンジニア活動のパーソナルサイトです。技術発信や、開発したものを載せていきます。
+        </p>
+      </div>
+      <a
+        href="/blog"
+      >
+        ブログを覗いてみる
+      </a>
+    </div>
+  </section>
+</BaseLayout>

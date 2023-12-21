@@ -1,0 +1,23 @@
+---
+const navigation = [
+  {
+    name: "ホーム",
+    href: "/",
+  },
+  {
+    name: "ブログ",
+    href: "/blog/",
+  },
+];
+---
+<header>
+  <nav>
+    {
+      navigation.map((item) => (
+        <a href={item.href}>
+          {item.name}
+        </a>
+      ))
+    }
+  </nav>
+</header>
