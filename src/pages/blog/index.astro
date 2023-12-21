@@ -1,20 +1,15 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import { getBlogs } from "@/lib/microcms";
-const response = await getBlogs({ fields: ["id", "title"] });
+import BlogsLayout from "@/layouts/BlogsLayout.astro";
+import { getBlogList } from "@/libs/microcms";
+import { LIMIT } from '@/constants';
+import ArticleList from '@/components/ArticleList.astro';
+const data = await getBlogList({
+    limit: LIMIT,
+  });
+
+console.log(data.totalCount)
 ---
 
-<BaseLayout>
-  <h1>ブログ一覧</h1>
-  <div class="mt-16">
-		<ul>
-      {
-        response.contents.map((content: any) => (
-          <li>
-            <a href={content.id}>{content.title}</a>
-          </li>
-        ))
-      }
-    </ul>
-	</div>
-</BaseLayout>
+<BlogsLayout>
+  <ArticleList articles={data.contents} />
+</BlogsLayout>

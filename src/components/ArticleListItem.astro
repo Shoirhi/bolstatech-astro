@@ -1,0 +1,13 @@
+---
+import type { Article } from '@/libs/microcms';
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+
+---
+<li>
+  <a href={`/blog/posts/${article.id}`}>{article.title}</a>
+</li>
