@@ -1,5 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getBlogs } from "@/lib/microcms";
+const response = await getBlogs({ fields: ["id", "title"] });
 ---
 
 <BaseLayout>
@@ -22,4 +24,15 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
       </a>
     </div>
   </section>
+	<div class="mt-16">
+		<ul>
+      {
+        response.contents.map((content: any) => (
+          <li>
+            <a href={content.id}>{content.title}</a>
+          </li>
+        ))
+      }
+    </ul>
+	</div>
 </BaseLayout>
