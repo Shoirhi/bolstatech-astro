@@ -60,22 +60,7 @@ const siteKey = import.meta.env.GOOGLE_RECAPTCHA_SITE_KEY;
           placeholder="お問い合わせ内容を入力してください"
           required></textarea>
       </label>
-      <button
-        type="submit"
-        class="btn btn-primary"
-        class="g-recaptcha"
-        data-sitekey={siteKey}
-        data-callback="onSubmit">送信する</button
-      >
+      <button type="submit" class="btn btn-primary">送信する</button>
     </form>
   </div>
 </BaseLayout>
-
-<script is:inline>
-  function onSubmit(token) {
-    var form = document.getElementById("form");
-    if (form.reportValidity()) {
-      form.submit();
-    }
-  }
-</script>
