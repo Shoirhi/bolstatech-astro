@@ -1,0 +1,14 @@
+---
+import type { Tag } from "@/libs/microcms";
+import TagList from "./TagList.astro";
+
+interface Props {
+  tags: Tag[];
+}
+
+const { tags } = Astro.props;
+---
+
+<nav>
+  <TagList tags={tags} />
+</nav>

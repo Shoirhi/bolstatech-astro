@@ -1,24 +1,26 @@
 ---
-import type { Article } from '@/libs/microcms';
-import ArticleListItem from './ArticleListItem.astro';
+import type { Article } from "@/libs/microcms";
+import ArticleListItem from "./ArticleListItem.astro";
 
 interface Props {
   articles?: Article[];
 }
 
-const { articles } = Astro.props
+const { articles } = Astro.props;
 
 if (!articles) {
   return null;
 }
-
 ---
-{articles.length === 0 ? (
-  <p>Article does not exist.</p>
-) : (
-  <ul>
-    {articles.map((article) => (
+
+{
+  articles.length === 0 ? (
+    <p>記事はありません。</p>
+  ) : (
+    <ul>
+      {articles.map((article) => (
         <ArticleListItem article={article} />
       ))}
-  </ul>
-)}
+    </ul>
+  )
+}

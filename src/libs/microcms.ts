@@ -40,6 +40,16 @@ export const getBlogList = async (queries?: MicroCMSQueries) => {
   return await client.getList<Blog>({ endpoint: "blogs", queries });
 };
 
+// get blog all ids
+export const getBlogAllIds = async () => {
+  return await client.getAllContentIds({ endpoint: "blogs" });
+};
+
+// get blog all contents
+export const getBlogAllList = async (queries?: MicroCMSQueries) => {
+  return await client.getAllContents<Blog>({ endpoint: "blogs", queries });
+};
+
 // get blog detail
 export const getBlogDetail = async (
   contentId: string,
@@ -60,8 +70,13 @@ export const getTagList = async (queries?: MicroCMSQueries) => {
 // get tag detail
 export const getTag = async (contentId: string, queries?: MicroCMSQueries) => {
   return await client.getListDetail<Tag>({
-    endpoint: "blogs",
+    endpoint: "tags",
     contentId,
     queries,
   });
+};
+
+// get tag all contents
+export const getTagAllList = async (queries?: MicroCMSQueries) => {
+  return await client.getAllContents<Tag>({ endpoint: "tags", queries });
 };

@@ -1,0 +1,38 @@
+---
+import BlogTagIndexLayout from "@/layouts/BlogTagIndexLayout.astro";
+import { getBlogAllList, getTagAllList } from "@/libs/microcms";
+import { LIMIT } from "@/constants";
+import ArticleList from "@/components/ArticleList.astro";
+import Pagination from "@/components/Pagination.astro";
+
+import type { GetStaticPathsOptions } from "astro";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const allTags = await getTagAllList({
+    fields: ["id"],
+  });
+  const allPosts = await getBlogAllList({
+    fields: ["id", "title", "tags.id"],
+  });
+
+  return allTags.flatMap((tag) => {
+    const filteredPosts = allPosts.filter((post) =>
+      post.tags?.some((tagInPost) => tagInPost.id === tag.id)
+    );
+    return paginate(filteredPosts, {
+      params: {
+        tagId: tag.id,
+      },
+      pageSize: LIMIT,
+    });
+  });
+}
+
+const { page } = Astro.props;
+const { tagId } = Astro.params;
+---
+
+<BlogTagIndexLayout tagId={tagId}>
+  <ArticleList articles={page.data} />
+  <Pagination page={page} />
+</BlogTagIndexLayout>

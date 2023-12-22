@@ -3,8 +3,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
 <BaseLayout>
-  <section class="w-full py-16">
-    <div class="container">
+  <section class="hero min-h-screen bg-base-200">
+    <div class="hero-content">
       <div class="space-y-6">
         <h1
           class="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none"
@@ -14,12 +14,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
         <p class="max-w-[500px] text-lg text-muted-foreground">
           僕のエンジニア活動のパーソナルサイトです。技術発信や、開発したものを載せていきます。
         </p>
+        <a href="/blog/p/1" class="btn btn-primary"> ブログを覗いてみる</a>
       </div>
-      <a
-        href="/blog"
-      >
-        ブログを覗いてみる
-      </a>
     </div>
   </section>
 </BaseLayout>

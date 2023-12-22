@@ -6,15 +6,15 @@ const navigation = [
   },
   {
     name: "ブログ",
-    href: "/blog/",
+    href: "/blog/p/1",
   },
 ];
 ---
-<header>
-  <nav>
+<header class="sticky top-0 bg-base-300">
+  <nav class="navbar justify-center">
     {
       navigation.map((item) => (
-        <a href={item.href}>
+        <a href={item.href} class="btn btn-ghost">
           {item.name}
         </a>
       ))

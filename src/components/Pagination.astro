@@ -1,0 +1,61 @@
+---
+import clsx from "clsx";
+
+interface Props {
+  page: any;
+  basePath?: string;
+  q?: string;
+}
+
+const { page, basePath = "/blog", q } = Astro.props;
+---
+
+<nav class="join w-full justify-center mt-16">
+  {
+    page.url.prev ? (
+      <a href={page.url.prev} class="join-item btn">
+        前へ
+      </a>
+    ) : (
+      <span class="join-item btn btn-disabled">前へ</span>
+    )
+  }
+
+  {
+    page.total > 1 ? (
+      <div class="join-item dropdown dropdown-top dropdown-hover">
+        <div tabindex="0" role="button" class="btn">
+          {page.currentPage} / {page.total}ページ
+        </div>
+        <ul
+          tabindex="0"
+          class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+        >
+          {Array.from({ length: page.total }).map((_, index) => (
+            <li>
+              {page.currentPage === index + 1 ? (
+                <span class="active">{index + 1}</span>
+              ) : (
+                <a href={`${basePath}/p/${index + 1}` + (q ? `?q=${q}` : "")}>
+                  {index + 1}
+                </a>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    ) : (
+      <span class="btn no-animation">1 / 1ページ</span>
+    )
+  }
+
+  {
+    page.url.next ? (
+      <a href={page.url.next} class="join-item btn">
+        次へ
+      </a>
+    ) : (
+      <span class="join-item btn btn-disabled">前へ</span>
+    )
+  }
+</nav>

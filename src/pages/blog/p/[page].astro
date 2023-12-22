@@ -1,0 +1,23 @@
+---
+import BlogsLayout from "@/layouts/BlogIndexLayout.astro";
+import { getBlogAllList } from "@/libs/microcms";
+import { LIMIT } from "@/constants";
+import ArticleList from "@/components/ArticleList.astro";
+import Pagination from "@/components/Pagination.astro";
+import type { GetStaticPathsOptions } from "astro";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const data = await getBlogAllList({
+    fields: ["id", "title", "tags.id"],
+  });
+
+  return paginate(data, { pageSize: LIMIT });
+}
+
+const { page } = Astro.props;
+---
+
+<BlogsLayout>
+  <ArticleList articles={page.data} />
+  <Pagination page={page} />
+</BlogsLayout>

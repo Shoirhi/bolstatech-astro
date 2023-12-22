@@ -1,0 +1,23 @@
+---
+import type { Tag } from "@/libs/microcms";
+import TagListItem from './TagListItem.astro';
+
+interface Props {
+  tags?: Tag[];
+  hasLink?: boolean;
+}
+
+const { tags, hasLink = true } = Astro.props;
+
+if (!tags) {
+  return null;
+}
+---
+
+<ul>
+  {tags.map((tag) => (
+    <li>
+      <TagListItem tag={tag} hasLink={hasLink} />
+    </li>
+  ))}
+</ul>

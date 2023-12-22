@@ -1,0 +1,24 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BlogNav from "@/components/BlogNav.astro";
+import { getTagList, getTag } from "@/libs/microcms";
+
+interface Props {
+  tagId: string;
+}
+
+const { tagId } = Astro.props;
+
+const tags = await getTagList({fields: ["id", "name"]});
+const tag = await getTag(tagId);
+---
+
+<BaseLayout>
+  <div class="container py-16">
+    <h1 class="text-3xl">ブログ タグ：{tag.name}</h1>
+    <BlogNav tags={tags.contents} />
+    <div class="mt-16">
+      <slot />
+    </div>
+  </div>
+</BaseLayout>

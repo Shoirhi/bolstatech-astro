@@ -1,0 +1,17 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BlogNav from "@/components/BlogNav.astro";
+import { getTagList } from "@/libs/microcms";
+
+const tags = await getTagList({ fields: ["id", "name"] });
+---
+
+<BaseLayout>
+  <div class="container py-16">
+    <h1 class="text-3xl">ブログ一覧</h1>
+    <BlogNav tags={tags.contents} />
+    <div class="mt-16">
+      <slot />
+    </div>
+  </div>
+</BaseLayout>

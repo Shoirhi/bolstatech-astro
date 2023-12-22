@@ -1,0 +1,18 @@
+---
+import type { Tag } from "@/libs/microcms";
+
+interface Props {
+  tag: Tag;
+  hasLink?: boolean;
+}
+
+const { tag, hasLink = true } = Astro.props;
+---
+
+{
+  hasLink ? (
+    <a href={`/blog/tags/${tag.id}/p/1`}>#{tag.name}</a>
+  ) : (
+    <span>#{tag.name}</span>
+  )
+}
