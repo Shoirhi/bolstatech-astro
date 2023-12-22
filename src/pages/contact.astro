@@ -1,0 +1,59 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="お問い合わせ">
+  <div class="container py-16">
+    <h1 class="text-3xl">お問い合わせ</h1>
+
+    <form method="POST" action="https://ssgform.com/s/32NnKiui4RLm" class="mt-6">
+      <div class="hidden"><input type="text" name="wana" /></div>
+      <label class="form-control w-full max-w-xs">
+        <div class="label">
+          <span class="label-text">お名前</span>
+          <span class="label-text-alt">必須</span>
+        </div>
+        <input
+          type="text"
+          name="お名前"
+          placeholder="お名前を入力してください"
+          autocomplete="name"
+          class="input input-bordered w-full max-w-xs"
+          required
+        />
+        <div class="label">
+          <span class="label-text-alt">例）株式会社○○ 田中 太郎</span>
+        </div>
+      </label>
+      <label class="form-control w-full max-w-xs">
+        <div class="label">
+          <span class="label-text">メールアドレス</span>
+          <span class="label-text-alt">必須</span>
+        </div>
+        <input
+          type="text"
+          name="メールアドレス"
+          placeholder="メールアドレスを入力してください"
+          autocomplete="email"
+          class="input input-bordered w-full max-w-xs"
+          required
+        />
+        <div class="label">
+          <span class="label-text-alt">例）○○@gmail.com</span>
+        </div>
+      </label>
+      <label class="form-control w-full max-w-xs">
+        <div class="label">
+          <span class="label-text">お問い合わせ内容</span>
+          <span class="label-text-alt">必須</span>
+        </div>
+        <textarea
+          name="お問い合わせ内容"
+          class="textarea textarea-bordered h-24"
+          placeholder="お問い合わせ内容を入力してください"
+          required></textarea>
+      </label>
+      <button type="submit" class="btn btn-primary">送信する</button>
+    </form>
+  </div>
+</BaseLayout>
