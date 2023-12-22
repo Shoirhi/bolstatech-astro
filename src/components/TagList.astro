@@ -1,23 +1,35 @@
 ---
 import type { Tag } from "@/libs/microcms";
-import TagListItem from './TagListItem.astro';
+import TagListItem from "./TagListItem.astro";
 
 interface Props {
   tags?: Tag[];
   hasLink?: boolean;
+  hasAll?: boolean;
 }
 
-const { tags, hasLink = true } = Astro.props;
+const { tags, hasLink = true, hasAll = true } = Astro.props;
 
 if (!tags) {
   return null;
 }
 ---
 
-<ul>
-  {tags.map((tag) => (
-    <li>
-      <TagListItem tag={tag} hasLink={hasLink} />
-    </li>
-  ))}
+<ul class="flex flex-wrap gap-2">
+  {
+    hasAll && (
+      <li>
+        <a href={`/blog/p/1`} class="btn btn-xs">
+          #全て
+        </a>
+      </li>
+    )
+  }
+  {
+    tags.map((tag) => (
+      <li>
+        <TagListItem tag={tag} hasLink={hasLink} />
+      </li>
+    ))
+  }
 </ul>

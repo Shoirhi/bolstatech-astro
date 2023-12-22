@@ -11,8 +11,8 @@ const { tag, hasLink = true } = Astro.props;
 
 {
   hasLink ? (
-    <a href={`/blog/tags/${tag.id}/p/1`}>#{tag.name}</a>
+    <a href={`/blog/tags/${tag.id}/p/1`} class="btn btn-xs">#{tag.name}</a>
   ) : (
-    <span>#{tag.name}</span>
+    <span class="btn btn-xs">#{tag.name}</span>
   )
 }

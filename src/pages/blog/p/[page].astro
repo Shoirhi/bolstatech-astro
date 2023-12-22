@@ -8,7 +8,7 @@ import type { GetStaticPathsOptions } from "astro";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const data = await getBlogAllList({
-    fields: ["id", "title", "tags.id"],
+    fields: ["id", "title", "tags", "createdAt", "publishedAt"],
   });
 
   return paginate(data, { pageSize: LIMIT });

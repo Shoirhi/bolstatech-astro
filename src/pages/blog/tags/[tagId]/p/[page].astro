@@ -12,7 +12,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
     fields: ["id"],
   });
   const allPosts = await getBlogAllList({
-    fields: ["id", "title", "tags.id"],
+    fields: ["id", "title", "tags", "createdAt", "publishedAt"],
   });
 
   return allTags.flatMap((tag) => {

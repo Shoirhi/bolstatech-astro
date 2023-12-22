@@ -22,11 +22,10 @@ const { page, basePath = "/blog", q } = Astro.props;
   {
     page.total > 1 ? (
       <div class="join-item dropdown dropdown-top dropdown-hover">
-        <div tabindex="0" role="button" class="btn">
+        <div role="button" class="btn">
           {page.currentPage} / {page.total}ページ
         </div>
         <ul
-          tabindex="0"
           class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
         >
           {Array.from({ length: page.total }).map((_, index) => (
@@ -34,7 +33,7 @@ const { page, basePath = "/blog", q } = Astro.props;
               {page.currentPage === index + 1 ? (
                 <span class="active">{index + 1}</span>
               ) : (
-                <a href={`${basePath}/p/${index + 1}` + (q ? `?q=${q}` : "")}>
+                <a href={`${basePath}/p/${index + 1}` + (q ? `?q=${q}` : "")} aria-label={`ページ ${index + 1} へ移動`}>
                   {index + 1}
                 </a>
               )}

@@ -1,5 +1,7 @@
 ---
 import type { Article } from '@/libs/microcms';
+import TagList from "@/components/TagList.astro"
+import { formatDate } from "@/libs/utils";
 
 interface Props {
   article: Article;
@@ -9,5 +11,11 @@ const { article } = Astro.props;
 
 ---
 <li>
-  <a href={`/blog/posts/${article.id}`}>{article.title}</a>
+  <a href={`/blog/posts/${article.id}`} class="block card bg-base-100 shadow-lg">
+    <div class="card-body">
+      <p class="card-title">{article.title}</p>
+      <TagList tags={article.tags} hasLink={false} hasAll={false} />
+      <p>{formatDate(article.publishedAt || article.createdAt)}</p>
+    </div>
+  </a>
 </li>
