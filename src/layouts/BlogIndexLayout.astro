@@ -2,12 +2,20 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import BlogNav from "@/components/BlogNav.astro";
 import { getTagList } from "@/libs/microcms";
+import Breadcrumb from "@/components/Breadcrumb.astro";
 
 const tags = await getTagList({ fields: ["id", "name"] });
 ---
 
-<BaseLayout>
+<BaseLayout title="ブログ">
   <div class="container py-16">
+    <Breadcrumb
+      lists={[
+        {
+          name: "ブログ一覧",
+        },
+      ]}
+    />
     <h1 class="text-3xl">ブログ一覧</h1>
     <BlogNav tags={tags.contents} />
     <div class="mt-16">

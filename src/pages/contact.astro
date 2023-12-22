@@ -1,16 +1,24 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
 ---
 
 <BaseLayout title="お問い合わせ">
   <div class="container py-16">
+    <Breadcrumb
+      lists={[
+        {
+          name: "お問い合わせ",
+        },
+      ]}
+    />
     <h1 class="text-3xl">お問い合わせ</h1>
 
     <form
       method="POST"
       action="https://ssgform.com/s/32NnKiui4RLm"
       id="form"
-      class="mt-6"
+      class="mt-6 space-y-4"
     >
       <div class="hidden" aria-hidden="true"><input type="text" name="wana" tabindex="-1" /></div>
       <label class="form-control w-full max-w-xs">
