@@ -1,12 +1,19 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const siteKey = import.meta.env.GOOGLE_RECAPTCHA_SITE_KEY;
 ---
 
 <BaseLayout title="お問い合わせ">
   <div class="container py-16">
     <h1 class="text-3xl">お問い合わせ</h1>
 
-    <form method="POST" action="https://ssgform.com/s/32NnKiui4RLm" class="mt-6">
+    <form
+      method="POST"
+      action="https://ssgform.com/s/32NnKiui4RLm"
+      id="form"
+      class="mt-6"
+    >
       <div class="hidden"><input type="text" name="wana" /></div>
       <label class="form-control w-full max-w-xs">
         <div class="label">
@@ -53,7 +60,22 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
           placeholder="お問い合わせ内容を入力してください"
           required></textarea>
       </label>
-      <button type="submit" class="btn btn-primary">送信する</button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        class="g-recaptcha"
+        data-sitekey={siteKey}
+        data-callback="onSubmit">送信する</button
+      >
     </form>
   </div>
 </BaseLayout>
+
+<script is:inline>
+  function onSubmit(token) {
+    var form = document.getElementById("form");
+    if (form.reportValidity()) {
+      form.submit();
+    }
+  }
+</script>
