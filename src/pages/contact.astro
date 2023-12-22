@@ -1,7 +1,5 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-
-const siteKey = import.meta.env.GOOGLE_RECAPTCHA_SITE_KEY;
 ---
 
 <BaseLayout title="お問い合わせ">
@@ -14,7 +12,7 @@ const siteKey = import.meta.env.GOOGLE_RECAPTCHA_SITE_KEY;
       id="form"
       class="mt-6"
     >
-      <div class="hidden"><input type="text" name="wana" /></div>
+      <div class="hidden" aria-hidden="true"><input type="text" name="wana" tabindex="-1" /></div>
       <label class="form-control w-full max-w-xs">
         <div class="label">
           <span class="label-text">お名前</span>
