@@ -14,26 +14,25 @@ const { page, basePath = "/blog", q } = Astro.props;
       <a href={page.url.prev} class="join-item btn">
         前へ
       </a>
-    ) : (
-      <span class="join-item btn btn-disabled">前へ</span>
-    )
+    ) : null
   }
 
   {
-    page.total > 1 ? (
+    page.lastPage > 1 ? (
       <div class="join-item dropdown dropdown-top dropdown-hover">
         <div role="button" class="btn">
-          {page.currentPage} / {page.total}ページ
+          {page.currentPage} / {page.lastPage}ページ
         </div>
-        <ul
-          class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-        >
-          {Array.from({ length: page.total }).map((_, index) => (
+        <ul class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+          {Array.from({ length: page.lastPage }).map((_, index) => (
             <li>
               {page.currentPage === index + 1 ? (
                 <span class="active">{index + 1}</span>
               ) : (
-                <a href={`${basePath}/p/${index + 1}` + (q ? `?q=${q}` : "")} aria-label={`ページ ${index + 1} へ移動`}>
+                <a
+                  href={`${basePath}/p/${index + 1}` + (q ? `?q=${q}` : "")}
+                  aria-label={`ページ ${index + 1} へ移動`}
+                >
                   {index + 1}
                 </a>
               )}
@@ -51,8 +50,6 @@ const { page, basePath = "/blog", q } = Astro.props;
       <a href={page.url.next} class="join-item btn">
         次へ
       </a>
-    ) : (
-      <span class="join-item btn btn-disabled">前へ</span>
-    )
+    ) : null
   }
 </nav>
