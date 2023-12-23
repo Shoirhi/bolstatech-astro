@@ -1,85 +1,97 @@
 ---
 import "@/styles/globals.css";
-import { SITE_TITLE, DESCRIPTION } from "@/constants";
+import { SEO } from "astro-seo";
+import { seoConfig } from "@/constants";
 
 export interface Props {
-  title?: string | undefined;
-  description?: string | undefined;
-  ogImage?: URL | undefined;
-  structuredData?:
-    | {
-        type: string;
-        option?: { [key: string]: any | null } | null;
-      }
-    | undefined;
+  title?: string;
+  description?: string;
+  imageUrl?: string;
+  disableIndexing?: boolean;
+  type?: "website" | "article";
+  structuredData?: {
+    type: string;
+    option?: { [key: string]: any | null } | null;
+  };
 }
-
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 if (Astro.props.title === undefined) {
-  Astro.props.title = SITE_TITLE;
+  Astro.props.title = seoConfig.siteName;
 } else if (Astro.props.title) {
-  Astro.props.title = `${Astro.props.title} | ${SITE_TITLE}`;
-}
-
-if (Astro.props.ogImage === undefined) {
-  Astro.props.ogImage = new URL("og-image.png", canonicalURL);
-}
-
-if (Astro.props.description === undefined) {
-  Astro.props.description = DESCRIPTION;
+  Astro.props.title = `${Astro.props.title} | ${seoConfig.siteName}`;
 }
 
 const {
   title,
   description,
-  ogImage,
+  imageUrl,
+  disableIndexing = false,
+  type,
   structuredData = {
     type: "WebSite",
     option: null,
   },
 } = Astro.props;
-
-const structuredDataOutput = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": structuredData.type,
-  name: SITE_TITLE,
-  inLanguage: "jp",
-  headline: title,
-  description: description,
-  image: ogImage,
-  url: Astro.url,
-  ...structuredData.option,
-});
 ---
 
-<meta charset="utf-8" />
-<meta name="robots" content="index, follow" />
-<meta name="googlebot" content="index, follow" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<SEO
+  title={title}
+  description={description || seoConfig.description}
+  noindex={disableIndexing}
+  nofollow={disableIndexing}
+  charset="utf-8"
+  openGraph={{
+    basic: {
+      title: title,
+      type: type || "website",
+      image: imageUrl || seoConfig.image.url,
+    },
+    image: {
+      width: 1200,
+      height: 630,
+    },
+    optional: {
+      siteName: seoConfig.siteName,
+      description: description || seoConfig.description,
+    },
+  }}
+  twitter={{
+    card: "summary_large_image",
+  }}
+  extend={{
+    link: [
+      {
+        rel: "sitemap",
+        href: "/sitemap-index.xml",
+      },
+    ],
+    meta: [
+      {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1",
+      },
+    ],
+  }}
+/>
+
 <meta name="generator" content={Astro.generator} />
-<link rel="canonical" href={canonicalURL} />
 <link
   rel="shortcut icon"
   type="image/svg+xml"
   href={`${Astro.site}favicon.svg`}
 />
-<title>{title}</title>
-<meta name="title" content={title} />
-<meta name="description" content={description} />
 
-<meta property="og:type" content="website" />
-<meta property="og:url" content={canonicalURL} />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
-<meta property="og:image" content={ogImage} />
-
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={canonicalURL} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={ogImage} />
-
-<script type="application/ld+json" set:html={structuredDataOutput} />
-
-<link rel="sitemap" href="/sitemap-index.xml" />
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": structuredData.type,
+    name: seoConfig.siteName,
+    inLanguage: "jp",
+    headline: title,
+    description: description,
+    image: imageUrl || seoConfig.image.url,
+    url: Astro.url,
+    ...structuredData.option,
+  })}
+/>

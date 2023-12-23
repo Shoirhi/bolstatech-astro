@@ -3,7 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getBlogList, getBlogDetail } from "@/libs/microcms";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import { formatDate } from "@/libs/utils";
-import { SITE_TITLE } from "@/constants";
+import { seoConfig } from "@/constants";
 import { load } from "cheerio";
 import { Image } from "astro:assets";
 
@@ -39,7 +39,8 @@ blog.content = $.html();
 <BaseLayout
   title={blog.title}
   description={blog.description}
-  ogImage={blog.thumbnail ? new URL(blog.thumbnail.url) : undefined}
+  imageUrl={blog.thumbnail ? blog.thumbnail.url : undefined}
+  type="article"
   structuredData={{
     type: "Article",
     option: {
@@ -53,7 +54,7 @@ blog.content = $.html();
         },
       ],
       publisher: {
-        name: SITE_TITLE,
+        name: seoConfig.siteName,
         url: Astro.site,
       },
     },
