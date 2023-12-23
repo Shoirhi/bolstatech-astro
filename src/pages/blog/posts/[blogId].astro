@@ -4,7 +4,7 @@ import { getBlogList, getBlogDetail } from "@/libs/microcms";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import { formatDate } from "@/libs/utils";
 import { SITE_TITLE } from "@/constants";
-
+import { load } from "cheerio";
 const { blogId } = Astro.params;
 
 export async function getStaticPaths() {
@@ -17,6 +17,21 @@ export async function getStaticPaths() {
 }
 
 const blog = await getBlogDetail(blogId as string);
+
+const $ = load(blog.content);
+
+// すべてのimgタグに対して操作を実行
+$("img").each((_, img) => {
+  // imgタグのsrc属性を更新
+  $(img).attr("src", $(img).attr("src") + "?fit=clip&w=560&fm=webp");
+
+  // widthとheightを560に設定
+  $(img).attr("width", "560");
+  $(img).attr("height", "560");
+});
+
+// 更新されたHTMLを取得
+blog.content = $.html();
 ---
 
 <BaseLayout
@@ -25,19 +40,19 @@ const blog = await getBlogDetail(blogId as string);
   structuredData={{
     type: "Article",
     option: {
-      "datePublished": blog.publishedAt || null,
-      "dateModified": blog.updatedAt || null,
-      "author": [
+      datePublished: blog.publishedAt || null,
+      dateModified: blog.updatedAt || null,
+      author: [
         {
           "@type": "Person",
-          "name": "Hiroshi Kamikawa",
-          "url": "https://twitter.com/shoirhi",
+          name: "Hiroshi Kamikawa",
+          url: "https://twitter.com/shoirhi",
         },
       ],
-      "publisher": {
-        "name": SITE_TITLE,
-        "url": Astro.site
-      }
+      publisher: {
+        name: SITE_TITLE,
+        url: Astro.site,
+      },
     },
   }}
 >

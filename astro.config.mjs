@@ -7,7 +7,10 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   site: process.env.CI ? "https://bolstatech.com" : "http://localhost:4321",
   redirects: {
-    "/blog": "/blog/p/1"
+    "/blog": "/blog/p/1",
   },
-  integrations: [tailwind(), sitemap()]
+  image: {
+    domains: ["images.microcms-assets.io"],
+  },
+  integrations: [tailwind(), sitemap()],
 });
