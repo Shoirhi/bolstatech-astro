@@ -1,20 +1,25 @@
 ---
 import "@/styles/globals.css";
+import { SITE_TITLE, DESCRIPTION } from "@/constants";
 
-interface Props {
+export interface Props {
   title?: string | undefined;
   description?: string | undefined;
   ogImage?: URL | undefined;
+  structuredData?:
+    | {
+        type: string;
+        option?: { [key: string]: any | null } | null;
+      }
+    | undefined;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const siteTitle = "Bolsta Tech";
-
 if (Astro.props.title === undefined) {
-  Astro.props.title = siteTitle;
+  Astro.props.title = SITE_TITLE;
 } else if (Astro.props.title) {
-  Astro.props.title = `${Astro.props.title} | ${siteTitle}`;
+  Astro.props.title = `${Astro.props.title} | ${SITE_TITLE}`;
 }
 
 if (Astro.props.ogImage === undefined) {
@@ -22,10 +27,30 @@ if (Astro.props.ogImage === undefined) {
 }
 
 if (Astro.props.description === undefined) {
-  Astro.props.description = "Bolsta Techのウェブサイト";
+  Astro.props.description = DESCRIPTION;
 }
 
-const { title, description, ogImage } = Astro.props;
+const {
+  title,
+  description,
+  ogImage,
+  structuredData = {
+    type: "WebSite",
+    option: null,
+  },
+} = Astro.props;
+
+const structuredDataOutput = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": structuredData.type,
+  name: SITE_TITLE,
+  inLanguage: "jp",
+  headline: title,
+  description: description,
+  image: ogImage,
+  url: Astro.url,
+  ...structuredData.option,
+});
 ---
 
 <meta charset="utf-8" />
@@ -54,3 +79,5 @@ const { title, description, ogImage } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={ogImage} />
+
+<script type="application/ld+json" set:html={structuredDataOutput} />

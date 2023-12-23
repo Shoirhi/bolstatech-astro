@@ -4,15 +4,42 @@ import BlogNav from "@/components/BlogNav.astro";
 import { getTagList } from "@/libs/microcms";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 
+interface Props {
+  currentPage: number;
+}
+
 const tags = await getTagList({ fields: ["id", "name"] });
+
+const { currentPage } = Astro.props;
 ---
 
-<BaseLayout title="ブログ">
+<BaseLayout
+  title={`ブログ一覧（${currentPage}ページ目）`}
+  description=`ブログ一覧の${currentPage}ページ目です。`
+  structuredData={{
+    type: "BreadcrumbList",
+    option: {
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "ホーム",
+          item: Astro.site,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: `ブログ一覧（${currentPage}ページ目）`,
+        },
+      ],
+    },
+  }}
+>
   <div class="container py-16">
     <Breadcrumb
       lists={[
         {
-          name: "ブログ一覧",
+          name: `ブログ一覧（${currentPage}ページ目）`,
         },
       ]}
     />

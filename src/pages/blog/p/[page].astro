@@ -1,5 +1,5 @@
 ---
-import BlogsLayout from "@/layouts/BlogIndexLayout.astro";
+import BlogIndexLayout from "@/layouts/BlogIndexLayout.astro";
 import { getBlogAllList } from "@/libs/microcms";
 import { LIMIT } from "@/constants";
 import ArticleList from "@/components/ArticleList.astro";
@@ -17,7 +17,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 const { page } = Astro.props;
 ---
 
-<BlogsLayout>
+<BlogIndexLayout currentPage={page.currentPage}>
   <ArticleList articles={page.data} />
   <Pagination page={page} />
-</BlogsLayout>
+</BlogIndexLayout>

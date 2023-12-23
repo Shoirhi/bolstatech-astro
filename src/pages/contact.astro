@@ -3,7 +3,28 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 ---
 
-<BaseLayout title="お問い合わせ">
+<BaseLayout
+  title="お問い合わせ"
+  description="お問い合わせフォームです。お気軽にお問合せください！"
+  structuredData={{
+    type: "BreadcrumbList",
+    option: {
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "ホーム",
+          item: Astro.site,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "お問い合わせ",
+        },
+      ],
+    },
+  }}
+>
   <div class="container py-16">
     <Breadcrumb
       lists={[
@@ -20,7 +41,9 @@ import Breadcrumb from "@/components/Breadcrumb.astro";
       id="form"
       class="mt-6 space-y-4"
     >
-      <div class="hidden" aria-hidden="true"><input type="text" name="wana" tabindex="-1" /></div>
+      <div class="hidden" aria-hidden="true">
+        <input type="text" name="wana" tabindex="-1" />
+      </div>
       <label class="form-control w-full max-w-xs">
         <div class="label">
           <span class="label-text">お名前</span>

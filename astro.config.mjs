@@ -4,6 +4,9 @@ import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  site: process.env.CI ? "https://bolstatech-astro.pages.dev" : "http://localhost:4321",
+  site: process.env.CI ? "https://bolstatech.com" : "http://localhost:4321",
+  redirects: {
+    "/blog": "/blog/p/1",
+  },
   integrations: [tailwind()],
 });
