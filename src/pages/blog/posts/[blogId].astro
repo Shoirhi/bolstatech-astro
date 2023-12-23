@@ -76,7 +76,7 @@ blog.content = $.html();
       <p>公開日時：{formatDate(blog.publishedAt || blog.createdAt)}</p>
       {
         blog.thumbnail && (
-          <Image src={blog.thumbnail.url} width="560" height="560" alt="" />
+          <Image src={blog.thumbnail.url} width="560" height="560" loading="eager" alt="" />
         )
       }
       <div set:html={blog.content} />
