@@ -39,6 +39,7 @@ blog.content = $.html();
 <BaseLayout
   title={blog.title}
   description={blog.description}
+  ogImage={blog.thumbnail ? new URL(blog.thumbnail.url) : undefined}
   structuredData={{
     type: "Article",
     option: {
