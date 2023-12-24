@@ -4,6 +4,7 @@ import HeadThemeChange from "@/components/HeadThemeChange.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import type { Props } from "@/components/HeadSEO.astro";
+import { ViewTransitions } from 'astro:transitions';
 
 const {
   title,
@@ -26,6 +27,7 @@ const {
       structuredData={structuredData}
     />
     <HeadThemeChange />
+    <ViewTransitions />
   </head>
   <body class="flex flex-col min-h-screen">
     <Header />
