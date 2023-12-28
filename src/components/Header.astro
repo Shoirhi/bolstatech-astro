@@ -1,5 +1,6 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
+import Logo from "./Logo.astro"
 const navigation = [
   {
     name: "ホーム",
@@ -24,7 +25,9 @@ const navigation = [
       <div class="w-full navbar bg-base-300">
         <nav class="navbar">
           <div class="flex-1">
-            <a href="/" class="btn btn-ghost text-xl">Bolsta Tech</a>
+            <a href="/" class="group">
+              <Logo />
+            </a>
           </div>
           <div class="hidden lg:flex space-x-6">
             <div>
