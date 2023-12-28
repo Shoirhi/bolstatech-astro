@@ -1,3 +1,4 @@
+import { load } from "cheerio";
 
 export const formatDate = (date: string) => {
   const utcDate = new Date(date);
@@ -7,4 +8,16 @@ export const formatDate = (date: string) => {
 
   const formattedDate = `${year}年${month}月${day}日`;
   return formattedDate;
+};
+
+export const adjustImageSizeAndFormat = (blogContent: string) => {
+  const $ = load(blogContent);
+
+  $("img").each((_, img) => {
+    $(img).attr("src", $(img).attr("src") + "?fit=clip&w=560&fm=webp");
+    $(img).attr("width", "560");
+    $(img).attr("height", "560");
+  });
+
+  return $.html();
 };
