@@ -5,8 +5,6 @@ import sitemap from "@astrojs/sitemap";
 import { seoConfig } from "./src/constants";
 import webmanifest from "astro-webmanifest";
 
-import react from "@astrojs/react";
-
 // https://astro.build/config
 export default defineConfig({
   site: process.env.CI ? "https://bolstatech.com" : "http://localhost:4321",
@@ -29,5 +27,5 @@ export default defineConfig({
     theme_color: "#ffffff",
     background_color: "#ffffff",
     display: "standalone"
-  }), react()]
+  })]
 });

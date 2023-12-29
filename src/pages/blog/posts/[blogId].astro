@@ -2,10 +2,9 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getBlogList, getBlogDetail } from "@/libs/microcms";
 import Breadcrumb from "@/components/Breadcrumb.astro";
-import { formatDate, adjustImageSizeAndFormat } from "@/libs/utils";
+import { formatDate, adjustImageSizeAndFormat, extractToc } from "@/libs/utils";
 import { seoConfig } from "@/constants";
 import { Image } from "astro:assets";
-import ArticleToc from "@/components/ArticleToc";
 
 const { blogId } = Astro.params;
 
@@ -21,6 +20,7 @@ export async function getStaticPaths() {
 const blog = await getBlogDetail(blogId as string);
 
 blog.content = adjustImageSizeAndFormat(blog.content);
+const toc = extractToc(blog.content);
 
 ---
 
@@ -63,7 +63,15 @@ blog.content = adjustImageSizeAndFormat(blog.content);
     <article class="prose">
       <h1>{blog.title}</h1>
       <p>公開日時：{formatDate(blog.publishedAt || blog.createdAt)}</p>
-      <ArticleToc client:only />
+      <ul>
+        {toc.map(data => (
+          <li>
+            <a href={`#${data.id}`}>
+              {data.text}
+            </a>
+          </li>
+        ))}
+      </ul>
       {
         blog.thumbnail && (
           <Image

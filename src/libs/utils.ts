@@ -21,3 +21,25 @@ export const adjustImageSizeAndFormat = (blogContent: string) => {
 
   return $.html();
 };
+
+type TocItem = {
+  id: string;
+  text: string;
+};
+
+export const extractToc = (blogContent: string) => {
+  const $ = load(blogContent);
+  const toc: TocItem[] = [];
+
+  $('h1, h2, h3, h4, h5, h6').each((_, element) => {
+    const heading = $(element);
+    const id = heading.attr('id') || '';
+    const text = heading.text();
+
+    if (id) {
+      toc.push({ id, text });
+    }
+  });
+
+  return toc;
+}
