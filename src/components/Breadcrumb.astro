@@ -8,14 +8,14 @@ const { lists } = Astro.props;
 
 <nav aria-label="Breadcrumb" class="text-sm breadcrumbs mb-4">
   <ul>
-    <li>
-      <a href="/"> ホーム</a>
+    <li class="tracking-[0.04em]">
+      <a href="/" class="underline"> ホーム</a>
     </li>
     {
       lists.map((list: ListItem, index: number) => (
-        <li class="flex gap-1 items-center">
+        <li class="flex gap-1 items-center tracking-[0.04em]">
           {lists.length - 1 !== index ? (
-            <a href={`${list.path}`}>{list.name}</a>
+            <a href={`${list.path}`} class="underline">{list.name}</a>
           ) : (
             list.name
           )}
