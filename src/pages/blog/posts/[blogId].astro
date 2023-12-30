@@ -21,7 +21,6 @@ const blog = await getBlogDetail(blogId as string);
 
 blog.content = adjustImageSizeAndFormat(blog.content);
 const toc = extractToc(blog.content);
-
 ---
 
 <BaseLayout
@@ -60,30 +59,52 @@ const toc = extractToc(blog.content);
         },
       ]}
     />
-    <article class="prose">
-      <h1>{blog.title}</h1>
-      <p>公開日時：{formatDate(blog.publishedAt || blog.createdAt)}</p>
-      <ul>
-        {toc.map(data => (
-          <li>
-            <a href={`#${data.id}`}>
-              {data.text}
-            </a>
-          </li>
-        ))}
-      </ul>
-      {
-        blog.thumbnail && (
-          <Image
-            src={blog.thumbnail.url}
-            width="560"
-            height="560"
-            loading="eager"
-            alt=""
-          />
-        )
-      }
-      <div set:html={blog.content} />
-    </article>
+    <div class="relative grid grid-cols-3 gap-x-4">
+      <article class="js-toc-content col-span-3 mx-auto prose md:col-span-2">
+        <h1>{blog.title}</h1>
+        <p>公開日時：{formatDate(blog.publishedAt || blog.createdAt)}</p>
+        {
+          blog.thumbnail && (
+            <Image
+              src={blog.thumbnail.url}
+              width="560"
+              height="560"
+              loading="eager"
+              alt=""
+            />
+          )
+        }
+        <div set:html={blog.content} />
+      </article>
+      <aside class="hidden prose md:block">
+        <!-- <ul class="sticky top-24">
+          {
+            toc.map((data) => (
+              <li>
+                <a href={`#${data.id}`}>{data.text}</a>
+              </li>
+            ))
+          }
+        </ul> -->
+        <div class="js-toc sticky top-24"></div>
+      </aside>
+    </div>
   </div>
+
+  <script
+    is:inline
+    src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"
+  ></script>
+
+  <script is:inline>
+    tocbot.init({
+      tocSelector: ".js-toc",
+      contentSelector: ".js-toc-content",
+      headingSelector: "h2, h3, h4, h5",
+      hasInnerContainers: true,
+      scrollSmoothDuration: 300,
+      headingsOffset: 96,
+      scrollSmoothOffset: -96,
+    });
+  </script>
 </BaseLayout>
