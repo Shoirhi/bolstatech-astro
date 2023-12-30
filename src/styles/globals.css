@@ -2,3 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+.toc-list {
+  @apply list-none p-0;
+}
+
+.toc-list:not(:first-child) {
+  @apply ps-3
+}
+
+.toc-list-item {
+  @apply p-0;
+}
+
+.toc-link {
+  @apply font-normal tracking-[0.04em] no-underline;
+}
+
+.is-active-link {
+  @apply font-medium;
+}
+
+.toc-link::before {
+  @apply bg-base-100;
+}
+
+.is-active-link::before {
+  @apply bg-slate-700;
+}

@@ -2,7 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getBlogList, getBlogDetail } from "@/libs/microcms";
 import Breadcrumb from "@/components/Breadcrumb.astro";
-import { formatDate, adjustImageSizeAndFormat, extractToc } from "@/libs/utils";
+import { formatDate, adjustImageSizeAndFormat } from "@/libs/utils";
 import { seoConfig } from "@/constants";
 import { Image } from "astro:assets";
 
@@ -20,8 +20,11 @@ export async function getStaticPaths() {
 const blog = await getBlogDetail(blogId as string);
 
 blog.content = adjustImageSizeAndFormat(blog.content);
-const toc = extractToc(blog.content);
 ---
+
+<Fragment slot="ExtraHead">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css">
+</Fragment>
 
 <BaseLayout
   title={blog.title}
@@ -59,7 +62,7 @@ const toc = extractToc(blog.content);
         },
       ]}
     />
-    <div class="relative grid grid-cols-3 gap-x-4">
+    <div class="relative grid grid-cols-3 gap-x-8">
       <article class="js-toc-content col-span-3 mx-auto prose md:col-span-2">
         <h1>{blog.title}</h1>
         <p>公開日時：{formatDate(blog.publishedAt || blog.createdAt)}</p>
@@ -76,17 +79,23 @@ const toc = extractToc(blog.content);
         }
         <div set:html={blog.content} />
       </article>
-      <aside class="hidden prose md:block">
-        <!-- <ul class="sticky top-24">
-          {
-            toc.map((data) => (
-              <li>
-                <a href={`#${data.id}`}>{data.text}</a>
-              </li>
-            ))
-          }
+      <aside class="hidden md:block">
+        <div class="sticky top-24">
+          <div class="card shadow-lg">
+            <div class="card-body px-0">
+              <p class="card-title px-6">目次</p>
+              <div class="overflow-hidden px-6 relative">
+                <div class="js-toc prose"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <ul class="steps steps-vertical">
+          <li class="step step-primary">Register</li>
+          <li class="step step-primary">Choose plan</li>
+          <li class="step">Purchase</li>
+          <li class="step">Receive Product</li>
         </ul> -->
-        <div class="js-toc sticky top-24"></div>
       </aside>
     </div>
   </div>
@@ -97,14 +106,22 @@ const toc = extractToc(blog.content);
   ></script>
 
   <script is:inline>
-    tocbot.init({
-      tocSelector: ".js-toc",
-      contentSelector: ".js-toc-content",
-      headingSelector: "h2, h3, h4, h5",
-      hasInnerContainers: true,
-      scrollSmoothDuration: 300,
-      headingsOffset: 96,
-      scrollSmoothOffset: -96,
-    });
+    function setTocbot() {
+      tocbot.init({
+        tocSelector: ".js-toc",
+        contentSelector: ".js-toc-content",
+        headingSelector: "h2, h3, h4, h5, h6",
+        hasInnerContainers: true,
+        scrollSmoothDuration: 300,
+        headingsOffset: 320,
+        scrollSmoothOffset: -96,
+        orderedList: false,
+        collapseDepth: 4,
+      });
+    }
+
+    setTocbot();
+
+    document.addEventListener("astro:after-swap", setTocbot);
   </script>
 </BaseLayout>
